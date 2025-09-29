@@ -1,2 +1,4 @@
+.dev.env
+.prod.env
 .vscode
 project/db/db.sqlite3
