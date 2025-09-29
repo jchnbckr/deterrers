@@ -577,7 +577,6 @@ def hosts_list_view(request):
         'is_paginated': True,
         'page_obj': hosts_list,
         'form': form,
-        'targets_list':targets_list,
     }
     return render(request, 'hosts_list.html', context)
 
