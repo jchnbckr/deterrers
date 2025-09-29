@@ -54,7 +54,7 @@ class ReportFormat(Enum):
     ANON_XML_UUID = "5057e5cc-b825-11e4-9d0e-28d24461215b"
     XML_UUID = "a994b278-1f62-11e1-96ac-406186ea4fc5"
     HTML_UUID = "ffa123c9-a2d2-409e-bbbb-a6c1385dbeaa"
-    PDF_UUID = "dc51a40a-c022-11e9-b02d-3f7ca5bdcb11"
+    PDF_UUID = "c402cc3e-b531-11e1-9163-406186ea4fc5"
     JSON_UUID = "37dad904-44d7-45f6-9b07-77089ea80689"
 
 # These UUIDs are specific to the deployment

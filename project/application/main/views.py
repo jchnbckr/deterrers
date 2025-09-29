@@ -1,6 +1,6 @@
 import logging
 import uuid
-import io
+import io, zipfile
 from threading import Thread
 import os
 import markdown
@@ -292,10 +292,16 @@ def gsm_host_report_download(request, report_id, report_format ):
                     return response
 
                 elif str(report_format).lower() == 'html':  # HTML
-                    report = scanner.get_report_html(report_uuid=str(report_uuid))  # HTML
-                    response = HttpResponse(report, content_type='text/html')
-                    response['Content-Disposition'] = f'attachment; filename="report_{report_id}.html"'
+                    report = scanner.get_report_html(report_uuid=str(report_uuid)) 
+                    report_buffer = io.BytesIO()
+                    with zipfile.ZipFile(report_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+                        zip_file.writestr(f"report_{report_id}.html", report)
+
+                    report_buffer.seek(0)
+                    response = HttpResponse(report_buffer.getvalue(), content_type='application/zip')
+                    response['Content-Disposition'] = f'attachment; filename="report_{report_id}.zip"'
                     return response
+
                 elif str(report_format).lower() == 'json':  # JSON
                     report = scanner.get_report_json(report_uuid=str(report_uuid)) 
                     report_str = json.dumps(report, indent=2)  # convert dict to pretty JSON string
