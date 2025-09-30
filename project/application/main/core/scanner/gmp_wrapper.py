@@ -725,17 +725,16 @@ class GmpScannerWrapper(ScannerAbstract):
                 report_target = report.xpath('report/task/target')[0]
                 report_target_id = report_target.get('id')
 
-                report_saverity = report.xpath('report/severity/full')[0].text
                 report_scan_end = report.xpath('report/scan_end')[0].text
                 report_scan_status = report.xpath('report/scan_run_status')[0].text
-
                 if report_target_id in targets_list and report_owner == self.username:
                     targets_list[report_target_id]['report_id'] = report_id
                     if report_scan_status == 'Done':
+                        report_severity = report.xpath('report/severity/full')[0].text
                         dt = datetime.fromisoformat(report_scan_end.replace("Z", "+00:00"))
                         report_scan_end = dt.astimezone(ZoneInfo("Europe/Berlin")).strftime("%d.%m.%Y %H:%M")
                         targets_list[report_target_id]['scan_end'] = report_scan_end
-                        targets_list[report_target_id]['severity'] = report_saverity
+                        targets_list[report_target_id]['severity'] = report_severity
 
 
         except IndexError:
